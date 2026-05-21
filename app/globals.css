@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+:root {
+    --brand-primary: #0f766e;
+    --brand-secondary: #f59e0b;
+    --brand-ink: #0f172a;
+    --brand-soft: #ecfeff;
+}
+
 @layer components {
     @keyframes marqueeScroll {
         0% {
@@ -12,6 +19,14 @@
 }
 
 @layer base {
+    body {
+        color: var(--brand-ink);
+        background:
+            radial-gradient(circle at 10% 0%, #dbeafe 0%, transparent 35%),
+            radial-gradient(circle at 90% 100%, #ccfbf1 0%, transparent 30%),
+            #f8fafc;
+    }
+
     button {
         cursor: pointer;
     }

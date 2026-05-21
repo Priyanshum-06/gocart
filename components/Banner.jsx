@@ -6,10 +6,35 @@ export default function Banner() {
 
     const [isOpen, setIsOpen] = React.useState(true);
 
-    const handleClaim = () => {
+    const copyCoupon = async (text) => {
+        if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+            return true;
+        }
+
+        if (typeof document !== 'undefined') {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            tempInput.style.position = 'fixed';
+            tempInput.style.opacity = '0';
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            const copied = document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            return copied;
+        }
+
+        return false;
+    };
+
+    const handleClaim = async () => {
         setIsOpen(false);
-        toast.success('Coupon copied to clipboard!');
-        navigator.clipboard.writeText('NEW20');
+        const copied = await copyCoupon('NEW20');
+        if (copied) {
+            toast.success('Coupon copied to clipboard!');
+        } else {
+            toast('Coupon code: NEW20');
+        }
     };
 
     return isOpen && (
